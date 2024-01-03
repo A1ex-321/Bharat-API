@@ -17,6 +17,7 @@ use App\Http\Controllers\Web\ProductDetailsController;
 use App\Http\Controllers\web\CartController;
 use App\Http\Controllers\web\CheckoutController;
 use App\Http\Controllers\web\OrderDetailsController;
+use App\Http\Controllers\Admin\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +64,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/orders/{orderId}/invoice', [OrdersController::class, 'generateInvoice'])->name('orders.generateInvoice');
 
     Route::resource('admin/gallery', GalleryController::class);
-
+    Route::resource('admin/allcontact', ContactController::class);
 });
 
 

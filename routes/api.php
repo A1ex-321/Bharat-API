@@ -8,6 +8,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Api\MessageController;
 
 
 
@@ -45,6 +46,9 @@ Route::get('/deleteCartItem/{id}', [CartController::class, 'deleteCartItem']);
 
 Route::post('/place-order', [PaymentController::class, 'placeOrder']);
 Route::post('/payment/store', [PaymentController::class, 'store']);
+Route::post('/orders', [PaymentController::class, 'Orders']);
+Route::post('/message', [MessageController::class, 'store']);
+
 
 
 

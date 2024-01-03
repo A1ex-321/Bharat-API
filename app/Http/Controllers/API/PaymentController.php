@@ -119,4 +119,5 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Error handling payment'], 500);
         }
     }
+    
 }
