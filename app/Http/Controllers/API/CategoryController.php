@@ -26,20 +26,16 @@ class CategoryController extends Controller
     public function categorys($id)
     {
         try {
-            $productDetails = CategoryModel::where("id", $id)
-                ->with('products')->get()->first();
+            $productDetails = ProductModel::where("category_id", $id)
+                ->get();
             if ($productDetails) {
                 $baseImageUrl = asset('/public/images/');
-                foreach ($productDetails->products as $product) {
+
+                foreach ($productDetails as $product) {
                     $product->image = $product->image ? $baseImageUrl . $product->image : null;
                 }
-
-                $productDetails->image = $productDetails->image ? $baseImageUrl . $productDetails->image : null;
-
-                return response()->json(['categorys' => $productDetails]);
-            } else {
-                return response()->json(['error' => 'Product not found']);
             }
+            return response()->json(['categorys' => $productDetails]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Internal Server Error']);
         }
