@@ -121,13 +121,17 @@ class CartController extends Controller
     }
     public function deleteCartItem($id)
     {
-        $cartItem = CartModel::find($id);
 
-        if (!$cartItem) {
-            return response()->json(['error' => 'Item not found'], 404);
+        try {
+            $cartItem = CartModel::find($id);
+            if (!$cartItem) {
+                return response()->json(['error' => 'Item not found'], 404);
+            }
+            $cartItem->delete();
+            return response()->json(['msg' => 'Item deleted successfully'], 200);
+        } catch (\Exception $e) {
+            // Handle exceptions or errors
+            return response()->json(['error' => 'Error delete cart item'], 500);
         }
-        $cartItem->delete();
-        // $updatedCart = $this->getUpdatedCartData();
-        return response()->json(['msg' => 'Item deleted successfully'], 200);
     }
 }
