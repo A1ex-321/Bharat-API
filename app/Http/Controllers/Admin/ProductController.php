@@ -37,7 +37,7 @@ class ProductController extends Controller
                 $image = $request->file('image');
                 $imageName = Str::random(20) . '.' . $image->getClientOriginalExtension();
                 $image->storeAs('public/images', $imageName); // The file will be stored in storage/app/public/images
-                $image->move(public_path('images'), $imageName);
+                $imagePath = $image->move(public_path('images'), $imageName);
 
             } else {
                 $imageName = null; // No image uploaded
@@ -90,17 +90,30 @@ class ProductController extends Controller
 
     public function update(Request $request, ProductModel $product)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'price' => 'required|numeric',
-        //     'description' => 'required|string',
-        //     'category_id' => 'required|exists:categories,id',
-        //     'brand_id' => 'required|exists:brands,id',
-        //     // Add other validation rules as needed
-        // ]);
+        
+        $category = ProductModel::find($product);
+        $category = ProductModel::find($product->id);
 
-        $product->update($request->all());
+        // request()->validate(['slug' => 'required|unique:category,slug,' . $id]);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = Str::random(20) . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/images', $imageName); // The file will be stored in storage/app/public/images
+            $image->move(public_path('images'), $imageName);
+        } else {
+            $imageName = $category->image; // No image uploaded
+        }
+        $category->name = $request->name;
+        $category->price = $request->price;
+        $category->description = $request->description;
+        $category->category_id = $request->category_id;
+        $category->brand_id = $request->brand_id;
+        $category->image = $imageName;
+        $category->size = $request->sizes;
+        $category->featured = $request->feature;
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully');
+
+        $category->save();
+        return redirect('admin/category/list')->with('success', 'Category Updated successfully');
     }
 }

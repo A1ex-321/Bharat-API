@@ -36,7 +36,7 @@ class CategoryController extends Controller
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imageName = Str::random(20) . '.' . $image->getClientOriginalExtension();
-                // $image->storeAs('public/images', $imageName); // The file will be stored in storage/app/public/images
+                 $image->storeAs('public/images', $imageName); // The file will be stored in storage/app/public/images
                 $imagePath = $image->move(public_path('images'), $imageName);
                 // Image::make($image->getRealPath())->fit(300, 200)->save($imagePath);
             } else {

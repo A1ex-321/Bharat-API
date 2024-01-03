@@ -74,7 +74,7 @@
                     <td>{{$value->slug}}</td>
                     <td>{{$value->meta_title}}</td>
                     <td>{{$value->meta_description}}</td>
-                    <td><img src="{{ asset('storage/app/public/images/' . $value->image) }}" alt="Image"width="70" height="60">
+                    <td><img src="{{ asset('/public/images/' . $value->image) }}" alt="Image"width="70" height="60">
 
                     </td>
                     <td> {{$value->meta_keyword}}</td>

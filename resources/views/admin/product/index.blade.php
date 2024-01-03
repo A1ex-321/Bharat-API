@@ -146,7 +146,7 @@
 
     </div>
 
-    <div class="container">
+    <div class="container" style="max-width:803px;">
         @if (count($products) > 0)
             <h6>Product List</h6>
 
