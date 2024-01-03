@@ -32,10 +32,10 @@ class CategoryController extends Controller
                 $baseImageUrl = asset('/public/images/');
 
                 foreach ($productDetails as $product) {
-                    $product->image = $product->image ? $baseImageUrl . $product->image : null;
+                    $product->image = $product->image ? $baseImageUrl . '/'.$product->image : null;
                 }
             }
-            return response()->json(['categorys' => $productDetails]);
+            return response()->json(['products' => $productDetails]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Internal Server Error']);
         }
