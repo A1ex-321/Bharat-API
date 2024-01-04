@@ -14,6 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         $records = CategoryModel::all();
+        $count=count($records);
 
         // Transform each record to include the full image URL
         $recordsWithImageUrl = $records->map(function ($record) {
@@ -21,14 +22,13 @@ class CategoryController extends Controller
             return $record;
         });
 
-        return response()->json(['data' => $recordsWithImageUrl]);
+        return response()->json(['data' => $recordsWithImageUrl,'count' => $count]);
     }
     public function categorys($id)
     {
         try {
             $productDetails = ProductModel::where("category_id", $id)
                 ->get();
-            $count=count($productDetails);
             if ($productDetails) {
                 $baseImageUrl = asset('/public/images/');
 
@@ -36,7 +36,7 @@ class CategoryController extends Controller
                     $product->image = $product->image ? $baseImageUrl . '/'.$product->image : null;
                 }
             }
-            return response()->json(['products' => $productDetails,'count' => $count]);
+            return response()->json(['products' => $productDetails]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Internal Server Error']);
         }
