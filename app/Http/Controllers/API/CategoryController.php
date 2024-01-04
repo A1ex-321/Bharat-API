@@ -28,6 +28,7 @@ class CategoryController extends Controller
         try {
             $productDetails = ProductModel::where("category_id", $id)
                 ->get();
+            $count=count($productDetails);
             if ($productDetails) {
                 $baseImageUrl = asset('/public/images/');
 
@@ -35,7 +36,7 @@ class CategoryController extends Controller
                     $product->image = $product->image ? $baseImageUrl . '/'.$product->image : null;
                 }
             }
-            return response()->json(['products' => $productDetails]);
+            return response()->json(['products' => $productDetails,'count' => $count]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Internal Server Error']);
         }
