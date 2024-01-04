@@ -6,15 +6,46 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class ProductDetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
+            if($request->input('price'))
+            {
+             $priceRange = $request->input('price');
+
+             if($priceRange[0] == 1500){
+                $records = ProductModel::where('price', '>', 1500)->get();
+            }
+             else{
+             $records = ProductModel::whereBetween('price', $priceRange)->get();
+             }
+            // Transform each product to include the complete image URL
+            $transformedProducts = $records->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->price,
+                    'description' => $product->description,
+                    'created_at' => $product->created_at,
+                    'updated_at' => $product->updated_at,
+                    'category_id' => $product->category_id,
+                    'brand_id' => $product->brand_id,
+                    'size' => $product->size,
+                    'featured' => $product->featured,
+                    'image' => $product->image ? url('/public/images') . '/' . $product->image : null,
+                ];
+            });
+
+            return response()->json($transformedProducts);
+            }
+            else{
             $products = ProductModel::all();
 
             // Transform each product to include the complete image URL
@@ -35,6 +66,7 @@ class ProductDetailsController extends Controller
             });
 
             return response()->json($transformedProducts);
+        }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -51,9 +83,10 @@ class ProductDetailsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id,Request $request)
     {
         try {
+            
             $productDetails = ProductModel::where('id', $id)->with('category', 'brand')->first();
     
             if ($productDetails) {
@@ -75,6 +108,7 @@ class ProductDetailsController extends Controller
             } else {
                 return response()->json(['error' => 'Product not found']);
             }
+        
         } catch (\Exception $e) {
             return response()->json(['error' => 'Internal Server Error']);
         }
