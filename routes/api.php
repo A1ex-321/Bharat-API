@@ -49,7 +49,7 @@ Route::post('/place-order', [PaymentController::class, 'placeOrder']);
 Route::post('/payment/store', [PaymentController::class, 'store']);
 Route::post('/orders', [PaymentController::class, 'Orders']);
 Route::post('/message', [MessageController::class, 'store']);
-Route::get('/herogallery', [ImageController::class, 'getherogallery']);
+Route::get('/image', [ImageController::class, 'getherogallery']);
 
 
 
