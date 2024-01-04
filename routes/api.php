@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\ImageController;
 
 
 
@@ -48,6 +49,8 @@ Route::post('/place-order', [PaymentController::class, 'placeOrder']);
 Route::post('/payment/store', [PaymentController::class, 'store']);
 Route::post('/orders', [PaymentController::class, 'Orders']);
 Route::post('/message', [MessageController::class, 'store']);
+Route::get('/herogallery', [ImageController::class, 'getherogallery']);
+
 
 
 

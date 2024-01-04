@@ -173,6 +173,16 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+                    <a href="{{ route('herogallery.index') }}"
+                        class="nav-link {{ request()->segment(2) === 'herogallery' ? 'active' : '' }}">
+                        <i class="fa fa-tasks" aria-hidden="true"></i>
+
+                        <p>
+                            Hero Image
+                        </p>
+                    </a>
+                </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
