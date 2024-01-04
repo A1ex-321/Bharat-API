@@ -94,7 +94,7 @@ class CartController extends Controller
                 'name' => $cartItem->product->name,
                 'price' => $cartItem->product->price,
                 'description' => $cartItem->product->description,
-                'product_image' => $cartItem->product->image ? url('/storage/app/public/images') . '/' . $cartItem->product->image : null,
+                'product_image' => $cartItem->product->image ? url('/public/images') . '/' . $cartItem->product->image : null,
 
             ];
         });
